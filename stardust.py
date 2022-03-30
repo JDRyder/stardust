@@ -1,14 +1,4 @@
-import sensors.BMP388 as bmp
-import sensors.veml6075 as veml
-import sensors.sam_m8q as sam
-import sensors.scd_30 as scd
-import leds.rgbLed as rgb
-
 import logging
-import time
-import sys
-import os
-
 from logging.handlers import TimedRotatingFileHandler
 
 logFormatter = logging.Formatter("%(asctime)s - %(levelname)s :\t%(message)s")
@@ -17,6 +7,41 @@ timedHandler.setFormatter(logFormatter)
 stardustLogger = logging.getLogger("StardustLogger")
 stardustLogger.addHandler(timedHandler)
 stardustLogger.setLevel(logging.INFO)
+
+try:
+	import leds.rgbLed as rgb
+except:
+	stardustLogger.error("Error importing led script. Check file structure."
+	
+try:
+	import sensors.veml6075 as veml
+except:
+	rgb.vemlError()
+	stardustLogger.error("Error importing veml6075.")
+
+try:
+	import sensors.sam_m8q as sam
+except:
+	rgb.samError()
+	stardustLogger.error("Error importing sam_m8q.")
+
+try:
+	import sensors.scd_30 as scd
+except:
+	rgb.scd30Error()
+	stardustLogger.error("Error importing scd_30.")
+
+try:
+	import sensors.BMP388 as bmp
+except:
+	rgb.bmpError()
+	stardustLogger.error("Error importing BMP388.")
+
+import time
+import sys
+import os
+
+
 
 def start():
 	try:
